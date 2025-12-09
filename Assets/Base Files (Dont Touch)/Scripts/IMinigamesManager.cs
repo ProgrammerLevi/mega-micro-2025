@@ -4,18 +4,12 @@ using UnityEngine;
 
 public interface IMinigamesManager
 {
-    enum Difficulty
-    {
-        EASY,
-        MEDIUM,
-        HARD
-    }
 
     /// <summary>
     /// Query this for the currently set difficulty of the game. 
     /// You can optionally use this to make your minigame easier or harder.
     /// </summary>
-    Difficulty GetCurrentMinigameDifficulty();
+    float GetCurrentMinigameDifficulty();
 
     /// <summary>
     /// Call this from your minigame the moment your minigame enters a winning state. This could

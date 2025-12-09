@@ -11,7 +11,6 @@ public class MinigamesManager : MonoBehaviour, IMinigamesManager
     public const int STARTING_LIVES = 3;
 
     [SerializeField] private List<MinigameDefinition> allMinigames;
-    [SerializeField] private int numRoundsInEasyMode;
     [SerializeField] private int numRoundsInNormalMode;
     public int numRoundsDebug { get { return numRoundsInNormalMode; }} 
 
@@ -19,7 +18,7 @@ public class MinigamesManager : MonoBehaviour, IMinigamesManager
     public Action<MinigameDefinition> OnStartMinigame;
     public Action OnEndMinigame;
 
-    public Difficulty minigameDifficulty;
+    public float minigameDifficulty;
 
     private MinigameStatus status;
     private List<MinigameDefinition> minigames;
@@ -124,7 +123,7 @@ public class MinigamesManager : MonoBehaviour, IMinigamesManager
         isCurrentMinigameWon = false;
     }
 
-    public Difficulty GetCurrentMinigameDifficulty()
+    public float GetCurrentMinigameDifficulty()
     {
         return minigameDifficulty;
     }

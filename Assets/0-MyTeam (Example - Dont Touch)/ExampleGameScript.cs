@@ -9,22 +9,23 @@ namespace TEAM_NAME_SPACE{
     public class ExampleGameScript : MonoBehaviour
     {
         // DELETE THIS FILE BEFORE YOU SUBMIT //
+        public TextMeshProUGUI DifficultyText;
         public TextMeshProUGUI UIText;
-        public string startText;
+        public AnimationCurve SpacePressesNeeded;
         public string winText;
-        public bool showDifficultyInStartText;
 
         public AudioClip loopSound;
         public AudioClip winSound;
 
+        private int spaceCount;
+
         private void Start()
         {
-            UIText.text = startText;
+            float difficulty = Managers.MinigamesManager.GetCurrentMinigameDifficulty();
+            DifficultyText.text = $"Current Difficulty: {difficulty.ToString()}";
+            spaceCount = Mathf.CeilToInt(SpacePressesNeeded.Evaluate(difficulty));
 
-            if(showDifficultyInStartText)
-            {
-                UIText.text += $" on {Managers.MinigamesManager.GetCurrentMinigameDifficulty().ToString()}";
-            }
+            UIText.text = $"Press space {spaceCount} times!";
             
             AudioSource loop = Managers.AudioManager.CreateAudioSource();
             loop.loop = true;
@@ -35,6 +36,12 @@ namespace TEAM_NAME_SPACE{
         private void Update()
         {
             if (Input.GetButtonDown("Space"))
+            {
+                spaceCount--;
+                UIText.text = $"Press space {spaceCount} times!";
+            }
+
+            if(spaceCount == 0)
             {
                 UIText.text = winText;
 

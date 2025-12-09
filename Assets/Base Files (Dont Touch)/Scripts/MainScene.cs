@@ -22,7 +22,6 @@ public class MainScene : MonoBehaviour
     private Action spacePressedAction;
 
     private String baseStatusText;
-    private float lastPressTime = 0;
 
     private void Awake() {
         normalBG = background.color;
@@ -53,17 +52,6 @@ public class MainScene : MonoBehaviour
 
         float axis = Input.GetAxis("Horizontal");
 
-        if (axis < 0 && Managers.__instance.minigamesManager.minigameDifficulty != IMinigamesManager.Difficulty.EASY && Time.time - lastPressTime > 0.5f)
-        {
-            Managers.__instance.minigamesManager.minigameDifficulty--;
-            lastPressTime = Time.time;
-        }
-        else if (axis > 0 && Managers.__instance.minigamesManager.minigameDifficulty != IMinigamesManager.Difficulty.HARD && Time.time - lastPressTime > 0.5f)
-        {
-            Managers.__instance.minigamesManager.minigameDifficulty++;
-            lastPressTime = Time.time;
-        }
-
         SetStatusText();
 
         oldSpacePressed = spacePressed;
@@ -81,25 +69,16 @@ public class MainScene : MonoBehaviour
         promptText.text = "";
     }
 
+    public void SetDifficulty(Slider s)
+    {
+        Managers.__instance.minigamesManager.minigameDifficulty = s.value;
+        SetStatusText();
+    }
+
     private void SetStatusText()
     {
-        String difficultyString = "";
-
-        switch(Managers.__instance.minigamesManager.minigameDifficulty)
-        {
-            case IMinigamesManager.Difficulty.EASY:
-                difficultyString = "easy";
-                break;
-            case IMinigamesManager.Difficulty.MEDIUM:
-                difficultyString = "medium";
-                break;
-            case IMinigamesManager.Difficulty.HARD:
-                difficultyString = "hard";
-                break;
-        }
-
         String statusTextString =
-            baseStatusText + $"\nCurrent Difficulty: {difficultyString} (use arrow keys or a/d to adjust)";
+            baseStatusText + $"\nCurrent Difficulty: {Managers.__instance.minigamesManager.minigameDifficulty.ToString()} (use slider to adjust)";
 
         statusText.text = statusTextString;
     }
