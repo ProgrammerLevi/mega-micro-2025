@@ -55,7 +55,18 @@ namespace lmckiller
                 // Clamp value between 0 and max
                 progressBar.value = Mathf.Clamp(progressBar.value, progressBar.minValue, progressBar.maxValue);
             }
-            
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (targetObject != null)
+                {
+                    // If it's on, turn it off. If it's off, turn it on.
+                    bool isVisible = targetObject.activeSelf;
+                    targetObject.SetActive(!isVisible);
+                }
+            }
+
+
         }
     }
 }
